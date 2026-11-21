@@ -1,0 +1,116 @@
+### ==========================================
+### 1. MICROSERVICIO SPRINTS (Puerto 8081)
+### ==========================================
+
+### Verificar estado Sprints MS
+GET http://127.0.0.1:8081/
+
+### Consultar todos los sprints
+GET http://127.0.0.1:8081/sprints
+
+### Consultar el último sprint registrado
+GET http://127.0.0.1:8081/sprints/ultimo
+
+### Crear un nuevo sprint
+POST http://127.0.0.1:8081/sprints
+Content-Type: application/json
+
+{
+    "nombre": "Sprint 1 - Arquitectura Microservicios",
+    "fecha_inicio": "2026-11-10",
+    "fecha_fin": "2026-11-24"
+}
+
+### Modificar un sprint (cambia el 1 por un ID real)
+PUT http://127.0.0.1:8081/sprints/1
+Content-Type: application/json
+
+{
+    "nombre": "Sprint 1 - Ajustado",
+    "fecha_inicio": "2026-11-10",
+    "fecha_fin": "2026-11-25"
+}
+
+### Eliminar un sprint
+DELETE http://127.0.0.1:8081/sprints/1
+
+
+### ==========================================
+### 2. MICROSERVICIO RETRO ITEMS (Puerto 8082)
+### ==========================================
+
+### Verificar estado Retro Items MS
+GET http://127.0.0.1:8082/
+
+### Consultar todos los ítems
+GET http://127.0.0.1:8082/items
+
+### Consultar ítems de un sprint específico (ej. sprint 1)
+GET http://127.0.0.1:8082/items/sprint/1
+
+### Crear un logro
+POST http://127.0.0.1:8082/items
+Content-Type: application/json
+
+{
+    "sprint_id": 1,
+    "categoria": "logro",
+    "descripcion": "Se completaron los 3 microservicios en Slim 4",
+    "fecha_revision": null
+}
+
+### Crear una acción / compromiso
+POST http://127.0.0.1:8082/items
+Content-Type: application/json
+
+{
+    "sprint_id": 1,
+    "categoria": "accion",
+    "descripcion": "Conectar el frontend con fetch a los 3 puertos",
+    "fecha_revision": "2026-11-24"
+}
+
+### Editar un ítem (cambia el 1 por un ID real)
+PUT http://127.0.0.1:8082/items/1
+Content-Type: application/json
+
+{
+    "categoria": "impedimento",
+    "descripcion": "Descripción editada desde REST Client",
+    "fecha_revision": "2026-11-22"
+}
+
+### Eliminar un ítem
+DELETE http://127.0.0.1:8082/items/1
+
+
+### ==========================================
+### 3. MICROSERVICIO ACCIONES (Puerto 8083)
+### ==========================================
+
+### Verificar estado Acciones MS
+GET http://127.0.0.1:8083/
+
+### Consultar todas las acciones de todos los sprints
+GET http://127.0.0.1:8083/acciones
+
+### Consultar acciones de un sprint específico (ej. sprint 1)
+GET http://127.0.0.1:8083/acciones/sprint/1
+
+### Marcar una acción individual como cumplida o pendiente
+PUT http://127.0.0.1:8083/acciones/2/cumplida
+Content-Type: application/json
+
+{
+    "cumplida": true
+}
+
+### Evaluar varias acciones en lote (al abrir una nueva retro)
+PUT http://127.0.0.1:8083/acciones/evaluar-lote
+Content-Type: application/json
+
+{
+    "acciones": [
+        { "id": 2, "cumplida": true }
+    ]
+}
